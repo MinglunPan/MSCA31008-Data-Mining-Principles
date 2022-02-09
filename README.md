@@ -4,6 +4,9 @@ This is the final project of MSCA31008, Data Mining Principles. In this project,
 # Descriptions
 TBF
 
+# Timeline
+TBF
+
 # Members
  - Ryan (Bowen) Liao
  - Norah Zhang
