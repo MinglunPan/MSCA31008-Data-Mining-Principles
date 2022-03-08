@@ -4,7 +4,7 @@ This is the final project of MSCA31008, Data Mining Principles. In this project,
 
 |Team Member|Role|Description|
 |:---:|:-:|:-|
-|**Jason Lee**|Script|Note-taking for meetings
+|[**Jason Lee**](https://github.com/jasonwlee1219)|Script|Note-taking for meetings
 |[**Milan Toolsidas**](https://github.com/mtoolsidas)|Quality Control|Checking if we meet the criteria of the assignments, formatting the PowerPoints and reports|
 |[**Minglun Pan**](https://github.com/MinglunPan)|Leader|Creating agendas for each meeting, making sure other roles’ expectations are meet|
 |[**Norah Zhang**](https://github.com/norahz3)|Facilitator|Planning meetings, creating Zoom meetings when needed, making sure everyone’s involved, timekeeping|
