@@ -6,7 +6,7 @@ from scipy.sparse import rand
 from sklearn.preprocessing import normalize
 from sklearn.metrics.pairwise import cosine_similarity
 
-def recommendItemCF_o(user_data, item_similarity_matrix, item_columns):
+def recommendItemCF(user_data, item_similarity_matrix, item_columns):
     user_records = np.nan_to_num(np.sign(user_data[item_columns]),0).T
     user_preference = np.nan_to_num(
         np.divide(user_data[item_columns].values, user_data[item_columns].sum(axis = 1).values.reshape(-1,1))
@@ -24,6 +24,15 @@ def recommendItemCF_o(user_data, item_similarity_matrix, item_columns):
 
     return pd.DataFrame(user_results_dict)
 
+def similarity_cosine(vec_x, vec_y):
+    return np.dot(vec_x, vec_y) / (vec_length(vec_x) * vec_length(vec_y))
+    
+def vec_length(vector):
+    return np.sqrt(np.dot(vector, vector))
 
-def item_similarity_o(matrix):
-    return cosine_similarity(matrix)
+def item_similarity(matrix):
+    sim_matrix = np.diag(np.ones(len(matrix)))
+    for i in range(len(matrix)):
+        for j in range(i+1, len(matrix)):
+            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix.iloc[i], matrix.iloc[j])
+    return sim_matrix
