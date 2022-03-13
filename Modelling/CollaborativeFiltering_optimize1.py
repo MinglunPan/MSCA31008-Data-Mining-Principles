@@ -40,14 +40,17 @@ def similarity_cosine(vec_x, vec_y):
 def vec_length(vector):
     return np.sqrt(np.dot(vector, vector))
 
-def item_similarity(matrix):
+def item_similarity(matrix, having_missing_values = False):
+    if having_massing_values:
     # initializing matrix
-    sim_matrix = np.diag(np.ones(len(matrix)))
-    # looping through matrix and comparing each pair
-    for i in range(len(matrix)):
-        for j in range(i+1, len(matrix)):
-            # Filtering for non-missing values only
-            both_filter = (matrix[i]==matrix[i]) & (matrix[j] == matrix[j])
-            # Running cosine similarity on pair
-            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix[i][both_filter], matrix[j][both_filter])
+        sim_matrix = np.diag(np.ones(len(matrix)))
+        # looping through matrix and comparing each pair
+        for i in range(len(matrix)):
+            for j in range(i+1, len(matrix)):
+                # Filtering for non-missing values only
+                both_filter = (matrix[i]==matrix[i]) & (matrix[j] == matrix[j])
+                # Running cosine similarity on pair
+                sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix[i][both_filter], matrix[j][both_filter])
+    else:
+        sim_matrix = cosine_similarity(matrix)
     return sim_matrix
