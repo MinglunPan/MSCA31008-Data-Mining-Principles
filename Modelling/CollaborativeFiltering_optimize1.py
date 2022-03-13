@@ -43,8 +43,8 @@ def item_similarity(matrix):
     sim_matrix = np.diag(np.ones(len(matrix)))
     for i in range(len(matrix)):
         for j in range(i+1, len(matrix)):
-            i_filter = np.where(matrix[i].values == matrix[i].values)
-            j_filter = np.where(matrix[j].values == matrix[j].values)
+            i_filter = np.where(matrix.iloc[i].values == matrix.iloc[i].values)
+            j_filter = np.where(matrix.iloc[j].values == matrix.iloc[j].values)
             both_filter = np.intersect1d(i_filter, j_filter)
-            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix[i].values[both_filter], matrix[j].values[both_filter])
+            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix.iloc[i].values[both_filter], matrix.iloc[j].values[both_filter])
     return sim_matrix
