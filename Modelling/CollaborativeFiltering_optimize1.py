@@ -25,18 +25,24 @@ def recommendItemCF(user_data, item_similarity_matrix, item_columns):
 
     return pd.DataFrame(user_results_dict)
 
+# Calculate the cosine similarity
 def similarity_cosine(vec_x, vec_y):
     return np.dot(vec_x, vec_y) / (vec_length(vec_x) * vec_length(vec_y))
-    
+ 
+# Calculate the vector length
 def vec_length(vector):
     return np.sqrt(np.dot(vector, vector))
 
 def item_similarity(matrix):
+    # initializing matrix
     sim_matrix = np.diag(np.ones(len(matrix)))
+    # looping through matrix and comparing each pair
     for i in range(len(matrix)):
         for j in range(i+1, len(matrix)):
+            # Filtering for non-missing values only
             i_filter = np.where(matrix.iloc[i].values == matrix.iloc[i].values)
             j_filter = np.where(matrix.iloc[j].values == matrix.iloc[j].values)
             both_filter = np.intersect1d(i_filter, j_filter)
+            # Running cosine similarity on pair
             sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix.iloc[i].values[both_filter], matrix.iloc[j].values[both_filter])
     return sim_matrix
