@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def recommendItemCF(user_data, item_similarity_matrix, item_data, having_missing_values = False):
     if having_missing_values:
-       return recommendItemCF_with_missing_values(user_data, item_similarity_matrix)
+        return recommendItemCF_with_missing_values(user_data, item_similarity_matrix)
     else:
         return recommendItemCF_no_missing_values(user_data, item_similarity_matrix, item_data)
 
