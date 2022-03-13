@@ -6,14 +6,6 @@ from scipy.sparse import rand
 from sklearn.preprocessing import normalize
 from sklearn.metrics.pairwise import cosine_similarity
 
-from abc import ABC
-import numpy as np
-from tqdm.notebook import tqdm
-import pandas as pd
-from scipy.sparse import rand
-from sklearn.preprocessing import normalize
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 def recommendItemCF(user_data, item_similarity_matrix, item_columns):
     user_records = np.nan_to_num(np.sign(user_data[item_columns]),0).T
