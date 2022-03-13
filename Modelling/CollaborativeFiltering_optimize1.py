@@ -6,11 +6,16 @@ from scipy.sparse import rand
 from sklearn.preprocessing import normalize
 from sklearn.metrics.pairwise import cosine_similarity
 
+def recommendItemCF(user_data, item_similarity_matrix, item_data, having_missing_values = False):
+    if having_missing_values:
+       return recommendItemCF_with_missing_values(user_data, item_similarity_matrix)
+    else:
+        return recommendItemCF_no_missing_values(user_data, item_similarity_matrix, item_data)
 
-def recommendItemCF(user_data, item_similarity_matrix, item_columns):
-    user_records = np.nan_to_num(np.sign(user_data[item_columns]),0)
+def recommendItemCF_with_missing_values(user_data, item_similarity_matrix, item_data = None):
+    user_records = np.nan_to_num(np.sign(user_data),0)
     user_preference = np.nan_to_num(
-        np.divide(user_data[item_columns].values, user_data[item_columns].sum(axis = 1).values.reshape(-1,1))
+        np.divide(user_data.values, user_data.sum(axis = 1).values.reshape(-1,1))
         ,0)
     user_results_dict = {}
     for i,idx in tqdm(enumerate(user_data.index)):
@@ -22,8 +27,10 @@ def recommendItemCF(user_data, item_similarity_matrix, item_columns):
                 1
             )
         )
+    return pd.DataFrame(user_results_dict).T.values
 
-    return pd.DataFrame(user_results_dict).T
+def recommendItemCF_no_missing_values(user_data, item_similarity_matrix, item_data):
+    return np.dot(np.dot(user_data, item_similarity_matrix),item_data)
 
 # Calculate the cosine similarity
 def similarity_cosine(vec_x, vec_y):
@@ -40,9 +47,7 @@ def item_similarity(matrix):
     for i in range(len(matrix)):
         for j in range(i+1, len(matrix)):
             # Filtering for non-missing values only
-            i_filter = np.where(matrix.iloc[i].values == matrix.iloc[i].values)
-            j_filter = np.where(matrix.iloc[j].values == matrix.iloc[j].values)
-            both_filter = np.intersect1d(i_filter, j_filter)
+            both_filter = (matrix[i]==matrix[i]) & (matrix[j] == matrix[j])
             # Running cosine similarity on pair
-            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix.iloc[i].values[both_filter], matrix.iloc[j].values[both_filter])
+            sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix[i][both_filter], matrix[j][both_filter])
     return sim_matrix
