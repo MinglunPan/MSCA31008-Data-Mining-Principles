@@ -8,10 +8,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def recommendItemCF(user_data, item_similarity_matrix, item_columns):
-    user_records = np.nan_to_num(np.sign(user_data[item_columns]),0).T
+    user_records = np.nan_to_num(np.sign(user_data[item_columns]),0)
     user_preference = np.nan_to_num(
         np.divide(user_data[item_columns].values, user_data[item_columns].sum(axis = 1).values.reshape(-1,1))
-        ,0).T
+        ,0)
     user_results_dict = {}
     for i,idx in tqdm(enumerate(user_data.index)):
         item_list = user_records[i]
@@ -23,7 +23,7 @@ def recommendItemCF(user_data, item_similarity_matrix, item_columns):
             )
         )
 
-    return pd.DataFrame(user_results_dict)
+    return pd.DataFrame(user_results_dict).T
 
 # Calculate the cosine similarity
 def similarity_cosine(vec_x, vec_y):
