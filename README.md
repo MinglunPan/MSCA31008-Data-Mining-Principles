@@ -35,6 +35,7 @@ The purpose of this project is to analyze factors on Yelp to predict the ratings
 
 ## Dataset
  - The dataset is very large, so removing unnecessary and redundant features will help improve the performance of the model. 
+ - Data tables are under the databse 'dmp_yelp_rs' in RCC Hadoop. 
 
 ## Feature Engineering
 
