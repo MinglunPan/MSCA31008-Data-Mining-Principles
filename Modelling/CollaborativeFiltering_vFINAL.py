@@ -6,6 +6,7 @@ from scipy.sparse import rand
 from sklearn.preprocessing import normalize
 from sklearn.metrics.pairwise import cosine_similarity
 
+# CF function
 def recommendItemCF(user_data, item_similarity_matrix, item_data, having_missing_values = False):
     if having_missing_values:
         return recommendItemCF_with_missing_values(user_data, item_similarity_matrix)
@@ -13,6 +14,8 @@ def recommendItemCF(user_data, item_similarity_matrix, item_data, having_missing
         return recommendItemCF_no_missing_values(user_data, item_similarity_matrix, item_data)
 
 def recommendItemCF_with_missing_values(user_data, item_similarity_matrix, item_data = None):
+    # Get recommendations using weighted sum of the ratings of other similar products.
+    # Assign missing values a weight of 0
     user_records = np.nan_to_num(np.sign(user_data),0)
     user_preference = np.nan_to_num(
         np.divide(user_data.values, user_data.sum(axis = 1).values.reshape(-1,1))
@@ -30,6 +33,7 @@ def recommendItemCF_with_missing_values(user_data, item_similarity_matrix, item_
     return pd.DataFrame(user_results_dict).T.values
 
 def recommendItemCF_no_missing_values(user_data, item_similarity_matrix, item_data):
+    # Get recommendations using weighted sum of the ratings of other similar products.
     return np.dot(np.dot(user_data, item_similarity_matrix),item_data)
 
 # Calculate the cosine similarity
@@ -52,5 +56,6 @@ def item_similarity(matrix, having_missing_values = False):
                 # Running cosine similarity on pair
                 sim_matrix[i][j] = sim_matrix[j][i] = similarity_cosine(matrix[i][both_filter], matrix[j][both_filter])
     else:
+        # use sklearn's cosine similarity if no missing values
         sim_matrix = cosine_similarity(matrix)
     return sim_matrix
