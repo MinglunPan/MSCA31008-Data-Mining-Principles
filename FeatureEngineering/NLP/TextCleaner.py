@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from functools import lru_cache
 import emoji
 
+# Define similar/common word patterns
 SIMILAR_WORDS_PATTERNS = {
     ' american ':
         [
@@ -146,8 +147,10 @@ SIMILAR_WORDS_PATTERNS = {
         ],
 }
 
+# Define TextCleaner class
 class TextCleaner:
     def __init__(self, procedure):
+        # Creating dictionary of potential actions
         self.action_dict = {
             'remove':TextRemover(),
             'modify':TextModifier()
@@ -156,6 +159,7 @@ class TextCleaner:
 
         self.procedure = procedure
 
+    # Setting up procedure producers/properties
     @property
     def procedure(self):
         return self.__procedure
@@ -165,6 +169,7 @@ class TextCleaner:
         for action, obj in procedure:
             self.__procedure_func_list.append(self.action_dict[action][obj])
         return self.__procedure_func_list  
+    # Apply each cleaning function/action to text
     def clean(self, text):
         for func in self.__procedure_func_list:
             try:
@@ -174,28 +179,36 @@ class TextCleaner:
                 raise e
         return text
 
+# Define TextModifier class
 class TextModifier:
     def __init__(self):
+        # Initialize dictionary for patters to modify
         self.__func_dict = {
             "Emoji":self._replace_emoji,
             'Lower':self._lower,
             'SimilarWords':self._replace_similar_words,
         }
+        # get item from function dictionary
     def __getitem__(self, key):
         return self.__func_dict[key]
+    # Replace emojis
     def _replace_emoji(self, text):
         text = emoji.demojize(text)
         return text
+    # Lowercase text
     def _lower(self, text):
         return text.lower()
+    # Replace similar words with their corresponding patterns
     def _replace_similar_words(self, text, similar_words = SIMILAR_WORDS_PATTERNS):
         for target, patterns in similar_words.items():
             for pat in patterns:
                 text = re.sub(pat, target, text)
         return text
     
+# Define TextRemover class
 class TextRemover:
     def __init__(self):
+        # Functions dictionary from what to remove
         self.__func_dict = {
             'HTMLTags':self._removeHTMLTags,
             'URL':self._removeURL,
@@ -204,6 +217,7 @@ class TextRemover:
             'ExtraSpaces':self._removeBegingEndSpace,
             'BegingEndSpace':self._removeBegingEndSpace,
             }
+        # Get function 
     def __getitem__(self, key):
         return self.__func_dict[key]
     def _removeHTMLTags(self, text):
@@ -225,6 +239,7 @@ class TextRemover:
                                 "]+", flags=re.UNICODE)
         text = emoji_pattern.sub(r'', text)
         return text
+    # Remove any special characters
     def _removeSpecialCharacters(self, text):
         text = re.sub(r"[^a-zA-Z\d]", " ", text)
         return text
