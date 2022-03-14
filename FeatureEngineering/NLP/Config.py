@@ -1,3 +1,4 @@
+# Initializing default cleaning procedure with the different actions
 DEFAULT_CLEAN_PROCEDURE = (
     ('modify','Emoji'),
     ('modify','Lower'),
@@ -10,6 +11,7 @@ DEFAULT_CLEAN_PROCEDURE = (
     ('remove','BegingEndSpace'),
 )
 
+# Data, preprocesser, encoder paths/locations
 DATA_PATH = '/home/adrian/Projects/Competition/data/kaggle-toxic-comments-2021'
 
 TFHUB_HANDLE_PREPROCESS = 'https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3'
