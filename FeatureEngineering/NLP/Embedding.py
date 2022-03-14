@@ -6,7 +6,8 @@ import tensorflow_text as text
 from tqdm.notebook import tqdm
 
 
-class Transfomer:
+class Transformer:
+    # Abstract class for transformer
     model = None
     def fit(self, text_series):
         raise NotImplementedError
@@ -16,7 +17,7 @@ class Transfomer:
         self.fit(text_series)
         return self.transform(text_series)
 
-class TFIDF_Transfomer(Transfomer):
+class TFIDF_Transformer(Transformer):
     def __init__(self):
         self.model = TfidfVectorizer(max_features = 15000, min_df= 3, max_df=0.5, analyzer = 'char_wb', ngram_range = (3,5))
     def fit(self, text_series):
@@ -24,7 +25,7 @@ class TFIDF_Transfomer(Transfomer):
     def transform(self, text_series):
         return self.model.transform(text_series)
 
-class BERT_Transfomer(Transfomer):
+class BERT_Transformer(Transformer):
     def __init__(self):
         self.model = BERT_transformer()
     def fit(self, text_series):
@@ -47,8 +48,8 @@ def BERT_transformer(tfhub_handle_encoder = TFHUB_HANDLE_ENCODER,
 
 class Embedding:
     TRANSFORMER_DICT = {
-        "TFIDF":TFIDF_Transfomer,
-        "BERT":BERT_Transfomer
+        "TFIDF":TFIDF_Transformer,
+        "BERT":BERT_Transformer
     }
 
     def __init__(self):
