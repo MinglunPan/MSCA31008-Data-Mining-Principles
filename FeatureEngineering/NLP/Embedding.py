@@ -47,6 +47,8 @@ def BERT_transformer(tfhub_handle_encoder = TFHUB_HANDLE_ENCODER,
 
 
 class Embedding:
+    # Administrator to mnanage different transformers and 
+    # provide a integrated class to manipulate the transformers
     TRANSFORMER_DICT = {
         "TFIDF":TFIDF_Transformer,
         "BERT":BERT_Transformer
@@ -62,13 +64,18 @@ class Embedding:
         self.__transformer_dict = {key:None for key in self.TRANSFORMER_DICT.keys()}
         self.__fit_dict = {key:False for key in self.__transformer_dict.keys()}
     def fit(self, text_series):
+        # pass the data to the embedding class
+        # but not actually fit any specific model
+        # just save a pointer
         self.init(text_series)
     def fit_model(self, method):
+        # specify the model to fit
         if not self.isFit(method):
             self.__transformer_dict[method] = self.TRANSFORMER_DICT.get(method)()
             self.__transformer_dict[method].fit(self.text_series)
             self.__fit_dict[method] = True
     def isFit(self, method):
+        # check whether model is fitted
         assert method in self.__fit_dict
         return self.__fit_dict.get(method)
     def transform(self, method, text_series, batch_size = None):

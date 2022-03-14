@@ -39,16 +39,5 @@ class Metrics:
     def DCG(self, rank_scores):
         # Discounted Cumulative Gain
         return np.sum(np.divide(np.power(2, rank_scores) - 1, np.log2(np.arange(rank_scores.shape[0]) + 2)))
-    def NDCG(self, y_pred_rank, y_true_rank = None):
-        y_true_rank = y_true_rank or list(range(1,len(y_pred_rank+1)))
-        relevance = np.ones_like(y_true_rank)
-
-        it2rel = {it: r for it, r in zip(y_true_rank, relevance)}
-        rank_scores = np.asarray([it2rel.get(it, 0.0) for it in y_pred_rank], dtype=np.float32)
-
-        idcg = self.DCG(relevance)
-        dcg = self.DCG(rank_scores)
-        if dcg == 0.0:
-            return 0.0
-        ndcg = dcg / idcg
-        return ndcg
+    def NDCG(self, y_pred_rank, y_true_rank):
+        return ndcg_score(y_true_rank, y_pred_rank)
