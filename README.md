@@ -51,7 +51,7 @@ The purpose of this project is to analyze factors on Yelp to predict the ratings
 
 2. Build recommendation systems:
  + singular value decomposition(SVD) and collaborative filtering(CF)
- + xgBoost and potentially deep learning. 
+ + Use XGBoost to extract features and then implement supervised learning to make the forecast. 
 
 ## Evaluation
 
