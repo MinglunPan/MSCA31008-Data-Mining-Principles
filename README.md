@@ -2,13 +2,13 @@
 
 This is the final project of MSCA31008, Data Mining Principles. In this project, we will implement a recommendation engine based on Yelp Dataset.
 
-|Team Member|Role|Description|
-|:---:|:-:|:-|
-|[**Jason Lee**](https://github.com/jasonwlee1219)|Script|Note-taking for meetings
-|[**Milan Toolsidas**](https://github.com/mtoolsidas)|Quality Control|Checking if we meet the criteria of the assignments, formatting the PowerPoints and reports|
-|[**Minglun Pan**](https://github.com/MinglunPan)|Leader|Creating agendas for each meeting, making sure other roles’ expectations are meet|
-|[**Norah Zhang**](https://github.com/norahz3)|Facilitator|Planning meetings, creating Zoom meetings when needed, making sure everyone’s involved, timekeeping|
-|[**Ryan Liao**](https://github.com/Ryan47Liao)|Devil’s Advocate|Providing constructive critical opinions, observing team dynamics|
+|Team Member|
+|:---:|
+|[**Jason Lee**](https://github.com/jasonwlee1219)|
+|[**Milan Toolsidas**](https://github.com/mtoolsidas)|
+|[**Minglun Pan**](https://github.com/MinglunPan)|
+|[**Norah Zhang**](https://github.com/norahz3)|
+|[**Ryan Liao**](https://github.com/Ryan47Liao)|
 
 
 # Descriptions
